@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>朋友申请书</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            font-family: "Microsoft YaHei", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            width: 80%;
+            max-width: 400px;
+            position: relative; /* 用于按钮绝对定位 */
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-around;
+            position: relative; /* 确保按钮在容器内定位 */
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #fff;
+            transition: all 0.3s ease;
+            position: relative; /* 用于后续动画 */
+        }
+        .accept {
+            background-color: #4CAF50;
+        }
+        .accept:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        .refuse {
+            background-color: #f44336;
+        }
+        .refuse:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainContainer">
+        <h1>你收到一封朋友申请书！</h1>
+        <p>对方申请成为你的朋友</p >
+        <div class="emoji">😲</div>
+        <div class="btn-group">
+            <button class="accept" onclick="showAcceptModal()">接受</button>
+            <button class="refuse" id="refuseBtn" onclick="moveRefuseBtn()">拒绝</button>
+        </div>
+    </div>
+
+    <div class="modal" id="acceptModal">
+        <div class="modal-content">
+            <h2>甜蜜提示</h2>
+            <p>恭喜！你收获了一份双向奔赴的友情~</p >
+        </div>
+    </div>
+
+    <div class="modal" id="refuseModal">
+        <div class="modal-content">
+            <h2>遗憾提示</h2>
+            <p>哎，错过啦~ 再考虑一下嘛？</p >
+        </div>
+    </div>
+
+    <script>
+        const refuseBtn = document.getElementById('refuseBtn');
+        const container = document.getElementById('mainContainer');
+
+        function showAcceptModal() {
+            document.getElementById('acceptModal').style.display = 'flex';
+        }
+
+        function showRefuseModal() {
+            document.getElementById('refuseModal').style.display = 'flex';
+        }
+
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target === modals[i]) {
+                    modals[i].style.display = 'none';
+                }
+            }
+        }
+
+        // 拒绝按钮随机跳动逻辑
+        function moveRefuseBtn() {
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = refuseBtn.getBoundingClientRect();
+
+            // 计算可移动的范围（避免按钮超出容器）
+            const maxX = containerRect.width - btnRect.width;
+            const maxY = containerRect.height - btnRect.height;
+
+            // 生成随机位置
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            // 移动按钮
+            refuseBtn.style.position = 'absolute';
+            refuseBtn.style.left = `${randomX}px`;
+            refuseBtn.style.top = `${randomY}px`;
+        }
+    </script>
+</body>
+</html>
